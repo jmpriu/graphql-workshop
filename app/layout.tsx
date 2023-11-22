@@ -1,4 +1,6 @@
 import { ApolloWrapper } from "@/lib/apollo-provider";
+import { Dynamic } from "./components/Dynamic";
+
 
 
 export default function RootLayout({
@@ -9,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <Dynamic><ApolloWrapper>{children}</ApolloWrapper></Dynamic>
       </body>
     </html>
   );
