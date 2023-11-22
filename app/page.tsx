@@ -23,13 +23,16 @@ export default function Page() {
     }>;
   }>(query, { variables: { platform: "web" } });
 
-  return (
-    <ul>
+  return (<>
+    <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+    <ul className="list-none hover:list-disc">
       {data.storefronts.map((storefront) => (
-        <li key={storefront.id}>
+        <li key={storefront.storefront_list_code}>
           {storefront.name} - {storefront.storefront_list_code}
         </li>
       ))}
-    </ul>
+    </ul></>
   );
 }
