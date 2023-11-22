@@ -5,14 +5,13 @@ export const dynamic = "force-dynamic";
 import { gql } from "@apollo/client";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const query = gql`query {
-  launchLatest {
-    mission_name
-  }
-}`
+const query = gql`query Myquery {
+  hello
+}
+`
 
 export default function Page() {
-  const { data } = useSuspenseQuery<{ launchLatest: { mission_name: string;}}>(query);
+  const { data } = useSuspenseQuery<{ hello: string;}>(query);
 
-  return <div>{data.launchLatest.mission_name}</div>;
+  return <div>{data.hello}</div>;
 };
