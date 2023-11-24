@@ -1,0 +1,33 @@
+
+type Publisher {
+  id: Int!
+  name: String!
+  publications: [Publication]
+}
+type Issue {
+  id: Int
+  name: String
+  cover: String!
+}
+type Publication {
+  id: Int!
+  name: String!
+  description: String!
+  cover: String!
+  slug: String
+  issues: [Issue]!
+  #publisher: Publisher
+}
+type Category {
+  id: Int!
+  name: String!
+  description: String
+  image: String
+  slug: String
+  publications: [Publication]!
+}
+type Query {
+  getCategories: [Category!]
+  getPublication: Publication
+  getPublisherOfPublication: Publisher
+}

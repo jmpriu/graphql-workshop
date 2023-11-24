@@ -4,35 +4,44 @@ export const dynamic = "force-dynamic";
 
 import { gql } from "@apollo/client";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { Title } from "./components/Title";
+import { Category } from "./components/Category";
 
 const query = gql`
-  query Storefronts($platform: String!) {
-    storefronts(platform: $platform) {
+  query categoryList {
+    getCategories {
       name
-      storefront_list_code
+      image
+      slug
+      publications {
+        id
+        name
+        cover
+      }
     }
   }
 `;
 
 export default function Page() {
   const { data } = useSuspenseQuery<{
-    storefronts: Array<{
-      id: number;
+    getCategories: Array<{
       name: string;
-      storefront_list_code: string;
+      slug: string;
+      image: string;
+      publications: Array<{ id: number; name: string; cover: string }>;
     }>;
-  }>(query, { variables: { platform: "web" } });
+  }>(query);
 
-  return (<>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    <ul className="list-none hover:list-disc">
-      {data.storefronts.map((storefront) => (
-        <li key={storefront.storefront_list_code}>
-          {storefront.name} - {storefront.storefront_list_code}
-        </li>
-      ))}
-    </ul></>
+  return (
+    <div className="container mx-auto">
+      <Title title="Best content!" />
+      <ul className="list-none">
+        {data.getCategories.map((category) => (
+          <li key={category.slug}>
+            <Category {...category} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
