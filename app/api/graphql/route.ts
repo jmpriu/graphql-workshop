@@ -52,38 +52,7 @@ const resolvers = {
       );
     },
   },
-  Publication: {
-    issues: (parent: PublicationResolver): Promise<IssueResolver[]> => {
-      return getIssuesByPublicationId(parent.id).then((issues) =>
-        issues.map((issue) => ({
-          id: issue.id,
-          name: issue.name,
-          cover: issue.cover_image ?? "",
-        })),
-      );
-    },
-    // Removed to show more queries
-    // publisher: (parent: PublicationResolver): Promise<PublisherResolver> => {
-    //   return getPublisherById(parent.publisher).then((publisher) => ({
-    //     id: +publisher.id,
-    //     name: publisher.name,
-    //     publications: [],
-    //   }));
-    //   // return { id: parent.publisher, name: "H", publications: [] };
-    // },
-  },
-  Publisher: {
-    publications: (parent: PublisherResolver): Promise<PublicationResolver[]> => getPublicationsByPublisherId(parent.id).then(publications => publications.map((c) => ({
-      id: c.id,
-      name: c.name,
-      description: c.description,
-      cover: c?.latest_issue?.cover_image,
-      slug: "",
-      issues: [],
-      publisher: parent.id,
-    }))),
-  },
-
+  // FIXME: Exercice 1: Publications issues and publisher publications are not being populated :(
   Query: {
     getCategories: async (
       parent: null,
@@ -91,6 +60,7 @@ const resolvers = {
       contextValue: any,
       info: any,
     ) => getCategories(),
+    // FIXME: Exercice 2: Will be cool if instead of having a hardcored id, we can get it from the query
     getPublication: (publicationId = 10661): Promise<PublicationResolver> =>
       getPublicationById(publicationId).then((c) => ({
         id: c.id,
