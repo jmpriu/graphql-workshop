@@ -1,5 +1,8 @@
 let tokenResponse: Promise<string> | null = null;
 const getToken = async (): Promise<string> => {
+  if (process.env.TOKEN) {
+    return process.env.TOKEN;
+  }
   if (!tokenResponse) {
     tokenResponse = fetch(`${process.env.API_URL}/oauth/v2/tokens`, {
       method: "POST",
